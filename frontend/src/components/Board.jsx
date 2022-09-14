@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { newGame } from "../store/game";
-import { useEffect } from "react";
+import { newGame, movePiece } from "../store/game";
+import { useEffect, useRef, useState } from "react";
 
 const __coords = [
   ["a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8"],
@@ -16,6 +16,27 @@ const __coords = [
 export default function Board() {
   const dispatch = useDispatch();
   const game = useSelector(state => state.game);
+  const [moving, setMoving] = useState(false);
+  const clickedSquare = useRef("");
+  const selectedPiece = useRef("");
+
+  const handleMove = (e) => {
+    if (!moving) {
+      setMoving(true);
+      clickedSquare.current = e.target.id;
+      selectedPiece.current = e.target.className;
+      e.target.classList.toggle("selected-piece");
+      return;
+    }
+    setMoving(false);
+    if (e.target.id === clickedSquare.current) {
+      e.target.className = selectedPiece.current;
+      return;
+    }
+    // PIECE, FROM, TO
+    dispatch(movePiece(selectedPiece.current, clickedSquare.current, e.target.id));
+    return;
+  };
 
   useEffect(() => {
     dispatch(newGame());
@@ -30,14 +51,15 @@ export default function Board() {
 	    : <div className={x % 2 ? "dark-square" : "light-square"}></div>
 	)))}
       </div>
-    <div id="pieces">
-      {game.pieces && __coords.map((row, x) => (row.map((c, y) => (
-	<div
-	  className={game.pieces[c] ? game.pieces[c] : ""}
-	  key={`pieces-${c}`} id={`${c}`}>
-	</div>
-      ))))}
-    </div>
+      <div id="pieces">
+	{game.pieces && __coords.map((row, x) => (row.map((c, y) => (
+	  <div
+	    className={game.pieces[c] ? game.pieces[c] : ""}
+            onClick={e => handleMove(e)}
+	    key={`pieces-${c}`} id={`${c}`}>
+	  </div>
+	))))}
+      </div>
     </>
   );
 }

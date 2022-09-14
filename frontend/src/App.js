@@ -1,6 +1,17 @@
+import "./index.css";
+import Board from "./components/Board";
+
 function App() {
   return (
-    <h1>Hello from App</h1>
+    <>
+      <div id="app-wrapper">
+        <div id="game-area">
+          <div id="board-area">
+            <Board />
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

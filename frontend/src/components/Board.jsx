@@ -20,6 +20,7 @@ export default function Board() {
   const clickedSquare = useRef("");
   const selectedPiece = useRef("");
 
+  // THIS WILL BE A COMPLICATED FUNCTION
   const handleMove = (e) => {
     if (!moving) {
       setMoving(true);

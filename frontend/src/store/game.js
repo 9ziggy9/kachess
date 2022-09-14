@@ -1,3 +1,5 @@
+import newPosition from "../rules";
+
 const NEW_GAME = "game/NEW_GAME";
 const MOVE = "game/MOVE";
 

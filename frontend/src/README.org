@@ -1,0 +1,11 @@
+* I For ONE
+** Am incredibly angry
+*** That the react devs
+**** Not only assumed
+***** That I wanted a readme generated
+******** But that
+********* I would possibly
+********** Want it in
+#+BEGIN_SRC console
+markup
+#+END_SRC

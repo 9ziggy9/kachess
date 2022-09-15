@@ -1,4 +1,5 @@
 const NEW_GAME = "game/NEW_GAME";
+const MOVE = "game/MOVE";
 
 // USEFUL
 const __initialPieces = {
@@ -29,9 +30,22 @@ export const newGame = () => ({
   }
 });
 
+export const movePiece = (piece, from, to) => ({
+  type: MOVE,
+  payload: {piece, from, to}
+});
+
 export default function reducer(state, action) {
   switch(action.type) {
   case NEW_GAME: return {...state, ...action.payload};
+  case MOVE: return ({
+    ...state,
+    pieces: {
+      ...state.pieces,
+      [action.payload.from]: undefined,
+      [action.payload.to]: action.payload.piece,
+    }
+  });
   default: return {error: "nopers"};
   }
 }
